@@ -13,6 +13,17 @@
         then the merged bib content will appear in the third text box.
         The merged bib text is automatically copied into OS clipboard.
     </p>
+    <p>
+        When removing duplicated items,
+        each item is identified by the first line, which usually contents the <b>citation label</b>.
+        An example is:
+    </p>
+    <pre>
+        @inproceedings{cite2021label,
+            title={...},
+            author={...}
+        }
+    </pre>
     <p>bib1:</p>
     <textarea id="bib1" onchange="merge()" cols="79" rows="4"></textarea>
     <p>bib2:</p>
