@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <h1>
+        Bib merge tool
+    </h1>
+    <p>
+        Fill <b>bib1</b> and <b>bib2</b> with the two bib file content, 
+        then the merged bib content will appear in the third text box.
+        The merged bib text is automatically copied into OS clipboard.
+    </p>
+    <p>bib1:</p>
+    <textarea id="bib1" onchange="merge()" cols="79" rows="4"></textarea>
+    <p>bib2:</p>
+    <textarea id="bib2" onchange="merge()" cols="79" rows="4"></textarea>
+    <p>merged:</p>
+    <textarea id="bib3" cols="79" rows="4"></textarea>
+    <script>
+
+        function copy_by_id(id) {
+            /* Get the text field */
+            var copyText = document.getElementById(id);
+
+            /* Select the text field */
+            copyText.select();
+
+            /* Copy the text inside the text field */
+            document.execCommand("copy");
+
+            /* Alert the copied text */
+            // alert("Copied the text: " + copyText.value);
+        }
+
+        function bib2array(bib) {
+            for (var i = 0; i < 5; i++) {
+                bib = bib.split('\n\n').join('\n');
+            }
+            bib = bib.split("@");
+            bib.shift();
+            return bib
+        }
+
+        function merge() {
+            console.log("Start Merge");
+            var bib1 = bib2array(document.getElementById("bib1").value);
+            var bib2 = bib2array(document.getElementById("bib2").value);
+            var dict = {};
+            for (var i = 0; i < bib1.length; i++) {
+                var b = bib1[i];
+                var lines = b.split("\n");
+                var ref = lines[0];
+                if (dict[ref] == undefined) {
+                    dict[ref] = b;
+                }
+            }
+            for (var i = 0; i < bib2.length; i++) {
+                var b = bib2[i];
+                var lines = b.split("\n");
+                var ref = lines[0];
+                if (dict[ref] == undefined) {
+                    dict[ref] = b;
+                }
+            }
+            var bib = ""
+            for (ref in dict) {
+                bib += "@" + dict[ref] + "\n";
+            }
+            console.log(bib);
+            console.log(bib.length);
+            document.getElementById("bib3").value = bib;
+            copy_by_id("bib3");
+        }
+    </script>
+</body>
+
+
+</html>
